@@ -26,9 +26,9 @@ The solution architecture provided below shows the on-demand (real-time) techniq
 
 1. Make sure your Amazon Aurora Database is setup with all the appropriate tables. Details are provided in the folder [Database](Database). If you are using your own tables, make sure you are changing the queries in the code file [1_CaseSummarisation.py](StreamlitApp/pages/1_CaseSummarisation.py)
 
-2. Make sure your Sagemaker endpoint is running. You can find the Details under the folder [Notebooks](Notebooks)
+2. Make sure your Sagemaker endpoint is running. You can find the Notebook Details under the folder [Notebooks](Notebooks)
 
-3. Provide all the appropriate roles for the AWS SErvices to interact with one another.
+3. Provide all the appropriate roles for the AWS Services to interact with one another.
 
 4. The code runs on Python3.10. Activate a virtual environment and install all the requirements
 ```
