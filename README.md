@@ -13,9 +13,13 @@ The solution architecture provided below shows the on-demand (real-time) techniq
 ![Architecture Diagram](Architecture.jpg)
 
 1. The customer support agent (referred to as user henceforth) wants to view a summary of the incoming support case and also generate a sentiment based on the case notes and the feedback provided by the user. In the frontend application, the user selects or enters the relevant case ID and clicks on “SageMaker JumpStart Summary” button. 
+
 2. The application executes a SQL query on Amazon Aurora which invokes an Aurora ML function by providing the case notes and additional details for the selected case ID stored in Amazon Aurora. 
+
 3. Aurora calls SageMaker endpoint to generate a summary of the case notes using third-party (3P) models in SageMaker Jumpstart. SageMaker uses the AI21 Summarize model to perform case summarization.
+
 4. The user requests a sentiment analaysis. Aurora ML generates the sentiment based on the case notes and feedback by calling Amazon Comprehend. 
+
 5. In Step 5 and 6, Amazon Aurora returns the summarized case information and/or the sentiment analysis as an appropriate response to the user via the frontend application.
 
 
