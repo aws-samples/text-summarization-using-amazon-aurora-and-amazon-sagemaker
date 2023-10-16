@@ -2,6 +2,7 @@ import logging
 import os,boto3,ai21
 from typing import Any
 import pickle as pkl
+"""setting up the AWS Region"""
 os.environ['AWS_DEFAULT_REGION'] = 'us-west-2'
 def query_endpoint(text, endpoint_name):
     response = ai21.Summarize.execute(
