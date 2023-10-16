@@ -1,0 +1,11 @@
+ServiceNameID,ServiceName,Description
+SVC01,Amazon S3,Scalable storage in the cloud
+SVC02,Amazon EC2,Virtual servers in the cloud
+SVC03,AWS Lambda,Serverless computing service
+SVC04,AWS Billing,AWS billing and cost management
+SVC05,Amazon RDS,Managed relational database service
+SVC06,AWS IAM,Identity and Access Management service
+SVC07,Amazon VPC,Virtual Private Cloud service
+SVC08,Amazon Route 53,Scalable domain name system (DNS) service
+SVC09,Amazon SNS,Simple Notification Service for message delivery
+SVC10,AWS CloudFormation,Infrastructure as Code service for resource management

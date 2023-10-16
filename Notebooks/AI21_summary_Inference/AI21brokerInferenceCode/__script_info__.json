@@ -1,0 +1,8 @@
+{
+    "FileName": "__script_info__.json",
+    "Framework": "huggingface",
+    "ModelId": "none",
+    "Scope": "inference",
+    "Task": "text2text",
+    "Version": "1.1.2"
+}

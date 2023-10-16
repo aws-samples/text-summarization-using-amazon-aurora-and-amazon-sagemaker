@@ -1,0 +1,31 @@
+/* Normalized Tables for storing case/ticket related tables/
+SELECT  from CaseSummarisation;
+SELECT * from CategoryTypeDetails;
+SELECT * from ServiceNameDetails;
+SELECT * from CaseOwnerDetails;
+SELECT * from RequestorDetails;
+
+/* Join case/ticket related tables/
+Select CaseID, Subject, CategoryTypeName, ServiceName, CaseNotes, CaseSummaryAI21, CaseSummaryBedrock
+from CaseSummarisation cs, CategoryTypeDetails ct, ServiceNameDetails sd where cs.CategoryTypeID=ct.CategoryTypeID and cs.ServiceNameID=sd.ServiceNameID;
+
+/AI21 Summarise function definitation
+CREATE FUNCTION `CaseSummariseAI21`( CaseID VARCHAR(50), Subject VARCHAR(255), ServiceName VARCHAR(255), CaseNotes VARCHAR(2000),Priority INT, Feedback VARCHAR(2000) ) RETURNS varchar(5000) CHARSET utf8mb4 alias aws_sagemaker_invoke_endpoint endpoint name 'auroramlsum' 
+
+/Summarize Case Notes in real time using AI21 Summarize Foundation Model deployed in Amazon SageMaker/
+select ca.CaseID, CaseSummariseAI21( ca.CaseID, ca.Subject , sn.ServiceName, ca.CaseNotes, ca.Priority, ca.Feedback) as 'CaseSummaryAI21' from CaseSummarisation ca join ServiceNameDetails sn on ca.ServiceNameID=sn.ServiceNameID where ca.CaseID='CAS02';
+
+/Summarize Case Notes in real time (via AWS Lambda integration with Amazon Aurora) using Amazon Bedrock Titan Text Foundation Model deployed in Amazon SageMaker/
+SELECT CaseID, lambda_sync('arn:aws:lambda:us-west-2:154985105880:function:bedrockLambda', JSON_OBJECT('inputText', CONCAT('Summarize the following text: ', JSON_QUOTE(CaseNotes)))) AS OverallReviews FROM CaseSummarisation WHERE CaseId = 'CAS02';
+
+/Summarize using AI21, Bedrock and also detect sentiment using Comprehend/
+select ca.CaseID, lambda_sync('arn:aws:lambda:us-west-2:154985105880:function:bedrockLambda', JSON_OBJECT('inputText', CONCAT('Summarize the following text: ', JSON_QUOTE(CaseNotes)))) as CaseSummaryBedrock, CaseSummariseAI21( ca.CaseID, ca.Subject , sn.ServiceName, ca.CaseNotes, ca.Priority, ca.Feedback) as 'CaseSummaryAI21', aws_comprehend_detect_sentiment(ca.feedback, 'en') as Sentiment from CaseSummarisation ca join ServiceNameDetails sn on ca.ServiceNameID=sn.ServiceNameID where ca.CaseID='CAS01';
+
+/Store summarized Case Notes using AI21 Summarize Foundation Model deployed in Amazon SageMaker/
+UPDATE CaseSummarisation ca
+INNER JOIN ServiceNameDetails sn ON ca.ServiceNameID = sn.ServiceNameID
+SET ca.CaseSummaryAI21 = CaseSummaryAI21(ca.CaseID, ca.Subject, sn.ServiceName, ca.CaseNotes, ca.Priority, ca.Feedback)
+WHERE ca.CaseID = 'CAS02';
+
+/Store summarized Case Notes via AWS Lambda integration with Amazon Aurora using Amazon Bedrock Titan Text Foundation Model deployed in Amazon SageMaker*/
+UPDATE CaseSummarisation SET CaseSummaryBedrock = lambda_sync('arn:aws:lambda:us-west-2:154985105880:function:bedrockLambda', JSON_OBJECT('inputText', CONCAT('Summarize the following text: ', JSON_QUOTE(CaseNotes)))) WHERE CaseId = 'CAS02'

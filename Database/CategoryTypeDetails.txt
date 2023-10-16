@@ -1,0 +1,11 @@
+CategoryTypeID,CategoryTypeName,Description
+CAT01,Storage,Storage-related category type description
+CAT02,Compute,Compute-related category type description
+CAT03,Serverless,Serverless-related category type description
+CAT04,Billing,Billing-related category type description
+CAT05,Analytics,Analytics-related category type description
+CAT06,Security,Security-related category type description
+CAT07,Network,Network-related category type description
+CAT08,Infrastructure as Code,Infrastructure as Code-related category type description
+CAT09,Another Category,Another category type description
+CAT10,Additional Category,Additional category type description

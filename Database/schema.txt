@@ -1,0 +1,44 @@
+CREATE TABLE CallSummarisation (
+CaseID VARCHAR(5) PRIMARY KEY,
+Subject VARCHAR(255),
+CategoryTypeID VARCHAR(5),
+ServiceNameID VARCHAR(5),
+CaseNotes VARCHAR(1000),
+RequestorID VARCHAR(5),
+CaseOwnerID VARCHAR(5),
+Stage ENUM('Open', 'Assigned', 'Resolved'),
+Priority INT CHECK (Priority BETWEEN 1 AND 4),
+Feedback VARCHAR(2000),
+CreationTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+LastUpdatedTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+Sentiment VARCHAR(255),
+CaseSummaryAI21 VARCHAR(6000),
+CaseSummaryBedrock VARCHAR(5000),
+FOREIGN KEY (CaseOwnerID) REFERENCES CaseOwnerDetails(CaseOwnerID),
+FOREIGN KEY (RequestorID) REFERENCES RequestorDetails(RequestorID),
+FOREIGN KEY (CategoryTypeID) REFERENCES CategoryTypeDetails(CategoryTypeID),
+FOREIGN KEY (ServiceNameID) REFERENCES ServiceNameDetails(ServiceNameID)
+);
+
+CREATE TABLE CaseOwnerDetails (
+  CaseOwnerID VARCHAR(5) PRIMARY KEY,
+  CaseOwnerName VARCHAR(255),
+  Email VARCHAR(255),
+  Phone VARCHAR(20)
+);
+CREATE TABLE RequestorDetails (
+    RequestorID VARCHAR(5) PRIMARY KEY,
+    RequestorName VARCHAR(255),
+    Email VARCHAR(255),
+    Phone VARCHAR(20)
+);
+CREATE TABLE CategoryTypeDetails (
+    CategoryTypeID VARCHAR(5) PRIMARY KEY,
+    CategoryTypeName VARCHAR(255),
+    Description VARCHAR(1000)
+);
+CREATE TABLE ServiceNameDetails (
+    ServiceNameID VARCHAR(5) PRIMARY KEY,
+    ServiceName VARCHAR(255),
+    Description VARCHAR(1000)
+);
