@@ -13,7 +13,10 @@ def query_endpoint(text, endpoint_name):
     return str(response.summary).replace(","," ").replace("\n",".").replace('"','')
 
 def get_text_from_s3(s3_file_path):
-
+    """
+    :param s3_file_path: The s3 file path
+    :return:
+    """
     s3_client = boto3.client('s3')
     s3_path_list = s3_file_path.split("/")
     s3_response = s3_client.get_object(
