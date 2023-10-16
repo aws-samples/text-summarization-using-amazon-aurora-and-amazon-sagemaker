@@ -7,6 +7,7 @@ import json
 
 st.title("Use Generative AI to help Summarise Case Notes and generate Customer Sentiment")
 
+#replace the secret_name and region_name with AWS secret manager where your credentials are stored
 def get_secret():
     secret_name = "aurora-db-credentials"
     region_name = "us-west-2"
@@ -19,7 +20,6 @@ def get_secret():
         get_secret_value_response = client.get_secret_value(
             SecretId=secret_name
         )
-        #st.write(get_secret_value_response)
     except ClientError as e:
         print(e)
 
@@ -27,7 +27,7 @@ def get_secret():
     secret = get_secret_value_response['SecretString']
     return secret
 
-#connect to mysql using your aurora cluster details. Enter appropriate password
+#connect to mysql using your aurora cluster details. Enter appropriate database name
 secret = json.loads(get_secret())
 connection = mysql.connector.connect(
     host=secret["host"],
