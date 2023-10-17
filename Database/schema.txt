@@ -1,4 +1,4 @@
-CREATE TABLE CallSummarisation (
+CREATE TABLE CaseSummarization (
 CaseID VARCHAR(5) PRIMARY KEY,
 Subject VARCHAR(255),
 CategoryTypeID VARCHAR(5),
