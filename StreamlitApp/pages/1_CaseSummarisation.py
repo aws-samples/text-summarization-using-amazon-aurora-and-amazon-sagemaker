@@ -9,7 +9,7 @@ st.title("Use Generative AI to help CaseSummarization Case Notes and generate Cu
 
 #replace the secret_name and region_name with AWS secret manager where your credentials are stored
 def get_secret():
-    secret_name = "aurora-db-credentials"
+    sm_key_name = "aurora-db-credentials"
     region_name = "us-west-2"
     session = boto3.session.Session()
     client = session.client(
@@ -18,7 +18,7 @@ def get_secret():
     )
     try:
         get_secret_value_response = client.get_secret_value(
-            SecretId=secret_name
+            SecretId=sm_key_name
         )
     except ClientError as e:
         print(e)

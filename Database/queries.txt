@@ -1,5 +1,5 @@
 /* Normalized Tables for storing case/ticket related tables/
-SELECT  from CaseSummarization;
+SELECT * from CaseSummarization;
 SELECT * from CategoryTypeDetails;
 SELECT * from ServiceNameDetails;
 SELECT * from CaseOwnerDetails;
